@@ -1,5 +1,8 @@
 from decodificacion import decodificar
 from codificacion import codificar
+from comma_parser import parse_comma_separated_input
+from file_parser import read_numbers_from_file
+from config import MAX_NUMBERS
 
 # Menú interactivo
 def menu():
@@ -11,12 +14,50 @@ def menu():
         print("3. Decodificar")
         print("4. Salir")
         
-        opcion = int(input("Seleccione una opción: "))
+        try:
+            opcion = int(input("Seleccione una opción: "))
+        except ValueError:
+            print('Por favor ingrese un número válido (1-4).')
+            continue
         
         if opcion == 1:  # Cargar datos
-            datos_str = input("Ingrese una cadena de números separados por comas: ")
-            datos = [int(x) for x in datos_str.split(',')]
-            print(f"Datos cargados: {datos}")
+            # Ask the user whether they want to enter a comma-separated string or a text file
+            while True:
+                print('\nCargar datos:')
+                print(f'1. Ingresar cadena de números separados por comas (máx {MAX_NUMBERS})')
+                print(f'2. Cargar desde archivo .txt con números separados línea a línea o por comas')
+                metodo = input('Seleccione método (1 o 2) o presione ENTER para cancelar: ').strip()
+                if metodo == '':
+                    print('Carga de datos cancelada.')
+                    break
+                if metodo not in ('1', '2'):
+                    print('Opción no válida. Intente de nuevo.')
+                    continue
+
+                if metodo == '1':
+                    datos_str = input(f'Ingrese una cadena de números separados por comas (máx {MAX_NUMBERS}): ').strip()
+                    try:
+                        numeros = parse_comma_separated_input(datos_str)
+                    except ValueError as e:
+                        print(f'Error: {e}')
+                        continue
+                    datos = numeros
+                    print(f'Datos cargados: {datos}')
+                    break
+
+                if metodo == '2':
+                    file_path = input('Ingrese el nombre del archivo .txt: ').strip()
+                    try:
+                        numeros = read_numbers_from_file(file_path)
+                    except FileNotFoundError as e:
+                        print(f'Error: {e}')
+                        continue
+                    except ValueError as e:
+                        print(f'Error: {e}')
+                        continue
+                    datos = numeros
+                    print(f'Datos cargados desde archivo: {datos}')
+                    break
         
         elif opcion == 2:  # Codificar
             if not datos:
