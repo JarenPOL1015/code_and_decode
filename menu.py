@@ -1,7 +1,7 @@
-from decodificacion import decodificar
-from codificacion import codificar
-from comma_parser import parse_comma_separated_input
-from file_parser import read_numbers_from_file
+from algorithms.decodificacion import decodificar
+from algorithms.codificacion import codificar
+from functions.comma_parser import parse_comma_separated_input
+from functions.file_parser import read_numbers_from_file
 from config import MAX_NUMBERS
 
 # Menú interactivo
