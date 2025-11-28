@@ -1,2 +1,2 @@
-# Shared configuration for input parsers
+# Configuracion global
 MAX_NUMBERS = 10

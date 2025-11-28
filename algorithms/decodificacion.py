@@ -1,6 +1,3 @@
-# Función para decodificar utilizando XOR con la misma clave
 def decodificar(datos_codificados, clave=15):
-    datos_decodificados = []
-    for numero in datos_codificados:
-        datos_decodificados.append(numero ^ clave)  # Operación XOR
-    return datos_decodificados
+    """Decodifica una lista de numeros usando XOR con la clave especificada."""
+    return [numero ^ clave for numero in datos_codificados]
